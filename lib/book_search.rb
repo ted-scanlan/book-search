@@ -8,111 +8,126 @@ class BookSearch
   include API
 
 
-
   def initialize
 
-  @title
-  @book_list = BookList.new
-  @results =[]    #make results own class
+    @title
+    @book_list = BookList.new
+    @results =[]    #make results own class
 
-end
-
-def start
-  get_title
-  make_call
-end
-
-def get_title
-
-  welcome_message
-  input = $stdin.gets.chomp
-
-  if input == "RL"
-  if !@book_list.contents.empty?
-      show_list
-   else
-     puts `clear`
-     puts "You havn't saved any books yet! Press R to return"
-     navigate
-   end
-  else
-    @title = input
   end
-end
 
-def show_list
-  puts `clear`
- @book_list.display_list
- puts""
- puts "press R to return"
- navigate
+  def start
+    get_title
 
-end
+  end
 
+  def get_title
 
-
-def welcome_message
-  puts `clear`
-  puts ""
-  puts ""
-  print "Please enter the title you'd like to search (or RL to view your reading list): "
-  puts ""
-  puts ""
-
-
-end
-
-def make_call
-
-  @results.clear
-  book_search_api(@title)
-  puts "Top 5 Results:"
-  puts ""
-  @results.each_with_index {|book, i|
-    
-   STDOUT.puts "#{i + 1}:
-    Title: #{book.title}
-    Author: #{book.author}
-    Publisher: #{book.company ? "#{book.company}" : "Information currently unavailable"}" }
-    book_save_menu
-
-end
-
-
-def book_save_menu
-    puts ""
-    puts "Please enter the number of the title you'd like to add to your reading list, or enter 'R' to search again"
-    puts""
+    welcome_message
     input = $stdin.gets.chomp
-    input_no = input.to_i
-    if input_no >= 1 && input_no <= 5
-      @book_list.save_book(@results[input_no -1])
-      puts""
-      puts "'#{@results[input_no -1].title}' has been added to your list. Press R to search again, or RL to view your list."
-      navigate
-    elsif input == "R"
-      start
+
+    if input == "RL"
+      if !@book_list.contents.empty?
+        show_list
+      else
+        puts `clear`
+        puts "You havn't saved any books yet! Press R to return"
+        navigate
+      end
     else
-      puts "incorrect input please try again"
+      @title = input
+      make_call
+    end
+  end
+
+  def show_list
+    puts `clear`
+    puts""
+    puts "Your reading list:"
+    puts""
+    @book_list.display_list
+    puts""
+    puts "press R to return"
+    navigate
+
+  end
+
+
+
+  def welcome_message
+    puts `clear`
+    puts ""
+    puts ""
+    print "Please enter the title you'd like to search for (or RL to view your reading list): "
+    puts ""
+    puts ""
+
+
+  end
+
+  def make_call
+
+    @results.clear
+    book_search_api(@title)
+    puts "Top 5 Results:"
+    puts ""
+    @results.each_with_index {|book, i|
+
+      STDOUT.puts "#{i + 1}:
+      Title: #{book.title}
+      Author: #{book.author}
+      Publisher: #{book.company ? "#{book.company}" : "Information currently unavailable"}" }
+      choose_book
 
     end
 
+
+    def choose_book
+      puts ""
+      puts "Please enter the number of the title you'd like to add to your reading list, or enter 'R' to search again"
+      puts""
+      loop do
+      input = $stdin.gets.chomp
+      input_no = input.to_i
+
+      if input_no >= 1 && input_no <= 5
+        @book_list.save_book(@results[input_no -1])
+        puts""
+        puts "'#{@results[input_no -1].title}' has been added to your list. Press R to search again, or RL to view your list."
+        navigate
+        return
+      elsif input == "R"
+        start
+        return
+      else
+        puts "incorrect input please try again"
+        next
+      end
+    end
+
+    end
+
+
+    def navigate
+      loop do
+      input = $stdin.gets.chomp
+
+      if input == 'R'
+        start
+        return
+      elsif input == 'RL'
+        show_list
+        return
+      elsif input == 'exit'
+        Kernel.exit(true)
+      else
+        print "Incorrect input, please try again "
+        puts""
+        next
+      end
+    end
   end
 
 
-def navigate
-  input = $stdin.gets.chomp
-  if input == 'R'
-    start
-  elsif input == 'RL'
-    show_list
-  elsif input == 'exit'
-    Kernel.exit(true)
-  else
-    print "incorrect input"
+
   end
-end
-
-
-
-end
