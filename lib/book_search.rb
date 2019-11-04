@@ -1,6 +1,12 @@
+require_relative 'book_api_module'
+require_relative 'book_list'
 
 
 class BookSearch
+  attr_reader :title, :results, :book_list
+
+  include API
+
 
 
   def initialize
@@ -32,6 +38,15 @@ def get_title
   else
     @title = input
   end
+end
+
+def show_list
+  puts `clear`
+ @book_list.display_list
+ puts""
+ puts "press R to return"
+ navigate
+
 end
 
 
