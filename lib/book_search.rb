@@ -62,6 +62,28 @@ def make_call
 
 end
 
+
+def book_save_menu
+    puts ""
+    puts "Please enter the number of the title you'd like to add to your reading list, or enter 'R' to search again"
+    puts""
+    input = $stdin.gets.chomp
+    input_no = input.to_i
+    if input_no >= 1 && input_no <= 5
+      @book_list.save_book(@results[input_no -1])
+      puts""
+      puts "'#{@results[input_no -1].title}' has been added to your list. Press R to search again, or RL to view your list."
+      navigate
+    elsif input == "R"
+      start
+    else
+      puts "incorrect input please try again"
+
+    end
+
+  end
+
+
 def navigate
   input = $stdin.gets.chomp
   if input == 'R'
