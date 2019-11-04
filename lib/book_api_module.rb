@@ -1,4 +1,5 @@
 require_relative '../api_key'
+require_relative './book'
 
 require 'json'
 require 'net/http'
