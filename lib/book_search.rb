@@ -12,7 +12,7 @@ class BookSearch
 
     @title
     @book_list = BookList.new
-    @results =[]    #make results own class
+    @results =[]    
 
   end
 
