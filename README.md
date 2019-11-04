@@ -17,6 +17,8 @@ If I had a bit more time, there are a few minor edge cases to do with the naviga
 
 ### Set-Up ###
 
+Clone this repository.
+
 ```
 cd book-search
 bundle install
