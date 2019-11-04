@@ -16,7 +16,6 @@ module API
       if res.is_a?(String)
    response = JSON.parse(res)
 
-   p response
 
    if response['items'].nil?
      puts `clear`
