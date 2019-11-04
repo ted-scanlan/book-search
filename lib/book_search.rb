@@ -11,13 +11,27 @@ class BookSearch
 
 end
 
+def start
+  get_title
+  make_call
+end
+
 def get_title
 
   welcome_message
   input = $stdin.gets.chomp
 
-  $stdin.gets.chomp
-
+  if input == "RL"
+  if !@book_list.contents.empty?
+      show_list
+   else
+     puts `clear`
+     puts "You havn't saved any books yet! Press R to return"
+     navigate
+   end
+  else
+    @title = input
+  end
 end
 
 
