@@ -12,6 +12,15 @@ describe BookSearch do
 
     end
 
+    it 'should save a title' do
+
+    subject = described_class.new
+   allow($stdin).to receive(:gets).and_return('surfing')
+   subject.get_title
+   expect(subject.title).to eq('surfing')
+ end
+
+
   end
 
   describe '#make_call' do
