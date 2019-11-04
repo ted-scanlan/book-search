@@ -6,6 +6,7 @@ class BookSearch
   def initialize
 
   @title
+  @book_list = BookList.new
   @results =[]    #make results own class
 
 end
