@@ -18,18 +18,22 @@ describe 'saving a book' do
 
   end
 
-  it "display 'info not available' if search result is nil" do
+  it "displays error if search result is nil" do
 
-   #  subject = described_class.new
-   # allow($stdin).to receive(:gets).and_return('flowers')
-   # subject.get_title
-   # subject.make_call
-   # subject.book_list.save_book(subject.results[1])
-   # p subject.book_list
-   # expect(subject.book_list.contents[0].company).to eq "info not available"
-   subject = described_class.new
-   allow($stdin).to receive(:gets).and_return('flower')
-   subject.start
+   json_response = File.open("./fixtures/book_results.json")
+
+   stub_request(:get, "https://www.googleapis.com/books/v1/volumes?q=intitle:#{@title}&key=#{API_KEY}").
+   to_return(status: 200, body: [{"kind"=>"books#volumes", "totalItems"=>0}])
+
+  #  subject = described_class.new
+  #  allow($stdin).to receive(:gets).and_return('dbhjksbhkbdhksbdk')
+  #  subject.get_title
+  #  subject.make_call
+  #  allow(STDOUT).to receive(:puts)
+  # expect(STDOUT).to have_received(:puts).with "No matches"
+
+
+
 
 
 

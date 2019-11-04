@@ -16,6 +16,8 @@ module API
       if res.is_a?(String)
    response = JSON.parse(res)
 
+   p response
+
    if response['items'].nil?
      puts `clear`
      puts "No matches, press 'R' to try again"
@@ -33,8 +35,10 @@ module API
 
  else
    top_5 = res[0..4]
+
    top_5.each {|book|
     @results << Book.new(book['volumeInfo']["title"], book['volumeInfo']["authors"][0], book['volumeInfo']["publisher"] )}
+
 end
 
 

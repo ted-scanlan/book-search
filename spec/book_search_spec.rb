@@ -1,5 +1,13 @@
 require 'book_search'
 
+Dir.chdir(File.dirname(__FILE__))
+require 'webmock'
+include WebMock::API
+
+WebMock.enable!
+
+
+
 describe BookSearch do
 
   describe'#get_title' do

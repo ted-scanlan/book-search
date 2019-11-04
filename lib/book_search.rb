@@ -69,7 +69,8 @@ def make_call
   puts "Top 5 Results:"
   puts ""
   @results.each_with_index {|book, i|
-   puts "#{i + 1}:
+    
+   STDOUT.puts "#{i + 1}:
     Title: #{book.title}
     Author: #{book.author}
     Publisher: #{book.company ? "#{book.company}" : "Information currently unavailable"}" }
