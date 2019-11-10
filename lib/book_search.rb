@@ -1,5 +1,6 @@
 require_relative 'search'
 require_relative 'book_list'
+require_relative 'message'
 
 
 class BookSearch
@@ -13,17 +14,15 @@ class BookSearch
     @title
     @book_list = BookList.new
     @results =[]
+    @message = Message.new
 
   end
+
+  
 
   def start
-    get_title
 
-  end
-
-  def get_title
-
-    welcome_message
+    @message.welcome
     input = $stdin.gets.chomp
 
     if input == "RL"
@@ -42,31 +41,18 @@ class BookSearch
 
   def show_list
 
-    @book_list.display_list
+    @book_list.display_list  #the actual funcitonality happens in the book list class. we can just invoke it from here.
     navigate
 
   end
 
 
 
-  def welcome_message
-    puts `clear`
-    puts ""
-    puts ""
-    print "Please enter the title you'd like to search for (or RL to view your reading list): "
-    puts ""
-    puts ""
-
-
-  end
-
   def make_call(search = Search.new)
     @search = search
-
-    # @results.clear
+    # @results.clear   results are cleared now because each time you call it it calls a new instance of the search class. (say in email)
     @search.book_search_api(@title)
     @search.display_results
-
       choose_book
 
     end
@@ -86,7 +72,7 @@ class BookSearch
       elsif input == "R"
         start
       else
-          puts "incorrect input please try again"
+          @message.incorrect_input
 
     end
 
@@ -106,8 +92,7 @@ class BookSearch
       elsif input == 'exit'
         Kernel.exit(true)
       else
-        print "Incorrect input, please try again "
-        puts""
+        @message.incorrect_input
         next
       end
     end

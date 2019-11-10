@@ -59,7 +59,7 @@ def display_results
     Publisher: #{book.company ? "#{book.company}" : "Information currently unavailable"}" }
 
 
-end
+  end
 
 
 
