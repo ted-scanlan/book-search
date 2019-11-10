@@ -5,14 +5,14 @@ require_relative 'book_list'
 class BookSearch
   attr_reader :title, :results, :book_list
 
-  include API
+
 
 
   def initialize
 
     @title
     @book_list = BookList.new
-    @results =[]    
+    @results =[]
 
   end
 
@@ -41,13 +41,8 @@ class BookSearch
   end
 
   def show_list
-    puts `clear`
-    puts""
-    puts "Your reading list:"
-    puts""
+
     @book_list.display_list
-    puts""
-    puts "press R to return"
     navigate
 
   end
@@ -65,18 +60,13 @@ class BookSearch
 
   end
 
-  def make_call
+  def make_call(search = Search.new)
+    @search = search
 
-    @results.clear
-    book_search_api(@title)
-    puts "Top 5 Results:"
-    puts ""
-    @results.each_with_index {|book, i|
+    # @results.clear
+    @search.book_search_api(@title)
+    @search.display_results
 
-      STDOUT.puts "#{i + 1}:
-      Title: #{book.title}
-      Author: #{book.author}
-      Publisher: #{book.company ? "#{book.company}" : "Information currently unavailable"}" }
       choose_book
 
     end
@@ -89,9 +79,9 @@ class BookSearch
       input = $stdin.gets.chomp
       input_no = input.to_i
       if input_no >= 1 && input_no <= 5
-        @book_list.save_book(@results[input_no -1])
+        @book_list.save_book(@search.results[input_no -1])
         puts""
-        puts "'#{@results[input_no -1].title}' has been added to your list. Press R to search again, or RL to view your list."
+        puts "'#{@search.results[input_no -1].title}' has been added to your list. Press R to search again, or RL to view your list."
         navigate
       elsif input == "R"
         start

@@ -14,12 +14,16 @@ class BookList
 
   def display_list
 
-    @contents.map {|book|
-       puts""
+      puts `clear`
+      puts""
+      puts "Your reading list:"
+      puts""
+        @contents.map {|book|
+
        STDOUT.puts "Title: #{book.title}\nAuthor: #{book.author}\nPublisher: #{book.company}"
        puts""
-
     }
+    puts "press R to return"
 
 
 
