@@ -3,7 +3,7 @@ require_relative 'book_list'
 require_relative 'message'
 
 
-class BookSearch
+class BookSearch   # acts as a central platform to bring together and invoke the search and save functionalities. 
   attr_reader :title, :results, :book_list
 
 
@@ -18,7 +18,7 @@ class BookSearch
 
   end
 
-  
+
 
   def start
 
@@ -52,8 +52,14 @@ class BookSearch
     @search = search
     # @results.clear   results are cleared now because each time you call it it calls a new instance of the search class. (say in email)
     @search.book_search_api(@title)
+    if @search.response['totalItems'] == 0
+      puts `clear`
+      puts "No matches, press 'R' to try again"
+      navigate
+    else
     @search.display_results
       choose_book
+    end
 
     end
 

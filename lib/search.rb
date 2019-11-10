@@ -4,11 +4,12 @@ require_relative './book'
 require 'json'
 require 'net/http'
 
-class Search
-  attr_reader :results
+class Search   # write in email - made api search into its own class. this can also deal with formatting the reponse and displaying the results. it made sense as now in the main book search class when we make the call to search it creates a new search class rather than having to wipe clean the results of the previous search.
+  attr_reader :results, :response
 
   def initialize()
     @results = []
+    @response
 
   end
 
@@ -23,29 +24,39 @@ class Search
       if res.is_a?(String)
         response = JSON.parse(res)
 
-
    if response['items'].nil?
-     puts `clear`
-     puts "No matches, press 'R' to try again"
-     navigate
+     @response = response
+     return
    end
 
-  top_5 = response['items'][0..4]
-  top_5.each {|book|
-    book['volumeInfo']["title"].nil? ? (title = "no info available") : (title = book['volumeInfo']["title"])
-    book['volumeInfo']["authors"].nil? ? (author = "no info available") : (author = book['volumeInfo']["authors"][0])
-    book['volumeInfo']["publisher"].nil? ? (company = "no info available") : (company = book['volumeInfo']["publisher"])
+   sort_results(response)
 
-    @results << Book.new(title, author, company)
-}
+ end
 
- else
-   top_5 = res[0..4]
 
+
+ def sort_results(results)
+
+   top_5 = response['items'][0..4]
    top_5.each {|book|
-    @results << Book.new(book['volumeInfo']["title"], book['volumeInfo']["authors"][0], book['volumeInfo']["publisher"] )}
+     book['volumeInfo']["title"].nil? ? (title = "no info available") : (title = book['volumeInfo']["title"])
+     book['volumeInfo']["authors"].nil? ? (author = "no info available") : (author = book['volumeInfo']["authors"][0])
+     book['volumeInfo']["publisher"].nil? ? (company = "no info available") : (company = book['volumeInfo']["publisher"])
 
-end
+     @results << Book.new(title, author, company)
+ }
+
+  else
+    top_5 = res[0..4]
+
+    top_5.each {|book|
+     @results << Book.new(book['volumeInfo']["title"], book['volumeInfo']["authors"][0], book['volumeInfo']["publisher"] )}
+
+ end
+
+
+
+ end
 
 
 def display_results
