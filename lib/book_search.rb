@@ -6,14 +6,10 @@ require_relative 'message'
 class BookSearch   # acts as a central platform to bring together and invoke the search and save functionalities.
   attr_reader :title, :results, :book_list
 
-
-
-
   def initialize
 
     @title
     @book_list = BookList.new
-    @results =[]
     @message = Message.new
 
   end
@@ -68,15 +64,14 @@ class BookSearch   # acts as a central platform to bring together and invoke the
       input_no = input.to_i
       if input_no >= 1 && input_no <= 5
         @book_list.save_book(@search.results[input_no -1])
-        puts""
-        puts "'#{@search.results[input_no -1].title}' has been added to your list. Press R to search again, or RL to view your list."
+        @message.saved(@search.results[input_no -1].title)
         navigate
       elsif input == "R"
         start
       else
-          @message.incorrect_input
+        @message.incorrect_input
 
-    end
+      end
 
     end
 

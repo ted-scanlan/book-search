@@ -22,22 +22,27 @@ class Search   # write in email - made api search into its own class. this can a
       res = Net::HTTP.get(uri)
 
       if res.is_a?(String)
-        response = JSON.parse(res)
+        @response = JSON.parse(res)
 
-   if response['items'].nil?
-     @response = response
-     return
-   end
+        if @response['items'].nil?
+          return
+        end
+        sort_results(@response)
 
-   sort_results(response)
+      else
+        top_5 = res[0..4]
+        top_5.each {|book|
+          @results << Book.new(book['volumeInfo']["title"], book['volumeInfo']["authors"][0], book['volumeInfo']["publisher"] )}
+        end
 
- end
+      end
+    end
 
 
 
  def sort_results(results)
 
-   top_5 = response['items'][0..4]
+   top_5 = results['items'][0..4]
    top_5.each {|book|
      book['volumeInfo']["title"].nil? ? (title = "no info available") : (title = book['volumeInfo']["title"])
      book['volumeInfo']["authors"].nil? ? (author = "no info available") : (author = book['volumeInfo']["authors"][0])
@@ -45,16 +50,6 @@ class Search   # write in email - made api search into its own class. this can a
 
      @results << Book.new(title, author, company)
  }
-
-  else
-    top_5 = res[0..4]
-
-    top_5.each {|book|
-     @results << Book.new(book['volumeInfo']["title"], book['volumeInfo']["authors"][0], book['volumeInfo']["publisher"] )}
-
- end
-
-
 
  end
 
@@ -73,11 +68,5 @@ def display_results
   end
 
 
-
-end
-
-
-
-end
 
 end

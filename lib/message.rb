@@ -37,9 +37,13 @@ class Message
     puts ""
     puts "Please enter the number of the title you'd like to add to your reading list, or enter 'R' to search again"
     puts""
-  end 
+  end
 
+  def saved(title)
+    puts""
+    puts "'#{title}' has been added to your list. Press R to search again, or RL to view your list."
 
+  end
 
 
 end
