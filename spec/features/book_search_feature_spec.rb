@@ -11,9 +11,9 @@ describe 'saving a book' do
 
     subject = described_class.new
    allow($stdin).to receive(:gets).and_return('surfing')
-   subject.get_title
+   subject.get_search_term
    subject.make_call
-   subject.book_list.save_book(subject.results[0])
+   subject.book_list.save_book(subject.search.result.results[0])
    expect(subject.book_list.contents.length).to eq 1
 
   end
