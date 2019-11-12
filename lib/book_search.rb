@@ -4,7 +4,7 @@ require_relative 'message'
 
 
 class BookSearch   # acts as a central platform to bring together and invoke the search and save functionalities.
-  attr_reader :title, :results, :book_list, :search
+  attr_reader :title, :results, :book_list, :search, :message
 
   def initialize
 
