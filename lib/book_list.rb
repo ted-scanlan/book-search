@@ -23,7 +23,7 @@ class BookList
        STDOUT.puts "Title: #{book.title}\nAuthor: #{book.author}\nPublisher: #{book.company}"
        puts""
     }
-    puts "press R to return"
+      puts "press R to return"
 
 
 

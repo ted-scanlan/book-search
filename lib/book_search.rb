@@ -3,7 +3,7 @@ require_relative 'book_list'
 require_relative 'message'
 
 
-class BookSearch   # acts as a central platform to bring together and invoke the search and save functionalities. 
+class BookSearch   # acts as a central platform to bring together and invoke the search and save functionalities.
   attr_reader :title, :results, :book_list
 
 
@@ -29,8 +29,7 @@ class BookSearch   # acts as a central platform to bring together and invoke the
       if !@book_list.contents.empty?
         show_list
       else
-        puts `clear`
-        puts "You havn't saved any books yet! Press R to return"
+        @message.empty_list
         navigate
       end
     else
@@ -53,8 +52,7 @@ class BookSearch   # acts as a central platform to bring together and invoke the
     # @results.clear   results are cleared now because each time you call it it calls a new instance of the search class. (say in email)
     @search.book_search_api(@title)
     if @search.response['totalItems'] == 0
-      puts `clear`
-      puts "No matches, press 'R' to try again"
+      @message.no_matches
       navigate
     else
     @search.display_results
@@ -65,9 +63,7 @@ class BookSearch   # acts as a central platform to bring together and invoke the
 
 
     def choose_book
-      puts ""
-      puts "Please enter the number of the title you'd like to add to your reading list, or enter 'R' to search again"
-      puts""
+      @message.make_choice
       input = $stdin.gets.chomp
       input_no = input.to_i
       if input_no >= 1 && input_no <= 5

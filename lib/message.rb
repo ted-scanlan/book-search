@@ -20,6 +20,25 @@ class Message
 
   end
 
+  def empty_list
+    puts `clear`
+    puts "You havn't saved any books yet! Press R to return"
+
+  end
+
+  def no_matches
+
+    puts `clear`
+    puts "No matches, press 'R' to try again"
+
+  end
+
+  def make_choice
+    puts ""
+    puts "Please enter the number of the title you'd like to add to your reading list, or enter 'R' to search again"
+    puts""
+  end 
+
 
 
 
