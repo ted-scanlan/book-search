@@ -51,7 +51,7 @@ class BookSearch   # acts as a central platform to bring together and invoke the
       @message.no_matches
       navigate
     else
-    @search.display_results
+    @search.result.display_results
       choose_book
     end
 
@@ -63,14 +63,13 @@ class BookSearch   # acts as a central platform to bring together and invoke the
       input = $stdin.gets.chomp
       input_no = input.to_i
       if input_no >= 1 && input_no <= 5
-        @book_list.save_book(@search.results[input_no -1])
-        @message.saved(@search.results[input_no -1].title)
+        @book_list.save_book(@search.result.results[input_no -1])
+        @message.saved(@search.result.results[input_no -1].title)
         navigate
       elsif input == "R"
         start
       else
         @message.incorrect_input
-
       end
 
     end
