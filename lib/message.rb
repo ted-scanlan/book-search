@@ -5,7 +5,7 @@ class Message
     STDOUT.puts `clear`
     STDOUT.puts ""
     STDOUT.puts ""
-    print "Please enter the title you'd like to search for (or RL to view your reading list): "
+    STDOUT.puts "Please enter the title you'd like to search for (or RL to view your reading list): "
     STDOUT.puts ""
     STDOUT.puts ""
 
@@ -27,10 +27,8 @@ class Message
   end
 
   def no_matches
-
     STDOUT.puts `clear`
     STDOUT.puts "No matches, press 'R' to try again"
-
   end
 
   def make_choice
@@ -42,7 +40,6 @@ class Message
   def saved(title)
     STDOUT.puts""
     STDOUT.puts "'#{title}' has been added to your list. Press R to search again, or RL to view your list."
-
   end
 
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Book
   attr_reader :title, :author, :company
 
@@ -5,11 +7,5 @@ class Book
     @title = title
     @author = author
     @company = company
-
   end
-
-
-
-
-
 end

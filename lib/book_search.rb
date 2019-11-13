@@ -3,44 +3,29 @@ require_relative 'book_list'
 require_relative 'message'
 
 
-class BookSearch   # acts as a central platform to bring together and invoke the search and save functionalities.
+class BookSearch
   attr_reader :title, :results, :book_list, :search, :message
 
   def initialize
-
-    @title
     @book_list = BookList.new
     @message = Message.new
-
   end
 
-
-
   def start
-
     @message.welcome
     get_search_term
     make_call
-
   end
-
 
   def show_list
-    if !@book_list.contents.empty?
-      @book_list.display_list
-    else
-      @message.empty_list
-    end
+    !@book_list.contents.empty? ? @book_list.display_list : @message.empty_list
     navigate
   end
-
 
   def get_search_term
     input = $stdin.gets.chomp
     input == "RL" ? show_list : (@title = input)
   end
-
-
 
   def make_call(search = Search.new)
     @search = search
@@ -54,23 +39,20 @@ class BookSearch   # acts as a central platform to bring together and invoke the
     end
   end
 
-
   def choose_book
     @message.make_choice
     input = $stdin.gets.chomp
     input_no = input.to_i
     if input_no >= 1 && input_no <= 5
-      @book_list.save_book(@search.result.results[input_no -1])
-      @message.saved(@search.result.results[input_no -1].title)
+      @book_list.save_book(@search.result.results[input_no - 1])
+      @message.saved(@search.result.results[input_no - 1].title)
       navigate
-    elsif input == "R"
+    elsif input == 'R'
       start
     else
       @message.incorrect_input
     end
-
   end
-
 
   def navigate
     loop do
@@ -89,7 +71,5 @@ class BookSearch   # acts as a central platform to bring together and invoke the
       end
     end
   end
-
-
 
   end

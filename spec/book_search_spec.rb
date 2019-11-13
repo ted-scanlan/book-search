@@ -16,23 +16,17 @@ describe BookSearch do
    it 'initialises with an instance of message' do
      expect(booksearch.message).to be_an_instance_of(Message)
    end
-
-
  end
 
  describe'#get_search_term' do
-
    it 'should get a title' do
-
      allow($stdin).to receive(:gets).and_return('harry potter')
      title = $stdin.gets
      expect(title).to eq('harry potter')
-
    end
 
    it 'should save a title' do
      subject = described_class.new
-
      allow($stdin).to receive(:gets).and_return('surfing')
      subject.get_search_term
      expect(subject.title).to eq('surfing')
@@ -54,8 +48,6 @@ describe'#start' do
      booksearch.start
     expect(booksearch).to have_received(:make_call)
   end
-
-
 end
 
   describe '#make_call' do
@@ -63,17 +55,9 @@ end
         allow(booksearch).to receive(:choose_book)
     end
 
-
     it 'calls the choose_book method' do
        booksearch.make_call
       expect(booksearch).to have_received(:choose_book)
     end
-
-
-      # should be in feature tests?
-
-
-    end
-
-
+  end
 end
