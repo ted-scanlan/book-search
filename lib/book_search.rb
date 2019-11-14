@@ -4,7 +4,7 @@ require_relative 'message'
 
 
 class BookSearch
-  attr_reader :title, :results, :book_list, :search, :message
+  attr_reader :title, :book_list, :search, :message
 
   def initialize
     @book_list = BookList.new
@@ -44,8 +44,7 @@ class BookSearch
     input = $stdin.gets.chomp
     input_no = input.to_i
     if input_no >= 1 && input_no <= 5
-      @book_list.save_book(@search.result.results[input_no - 1])
-      @message.saved(@search.result.results[input_no - 1].title)
+      save_book(input_no)
       navigate
     elsif input == 'R'
       start
@@ -70,6 +69,11 @@ class BookSearch
         next
       end
     end
+  end
+
+  def save_book(choice)
+    @book_list.save_book(@search.result.results[choice - 1])
+    @message.saved(@search.result.results[choice - 1].title)
   end
 
   end

@@ -59,5 +59,6 @@ end
        booksearch.make_call
       expect(booksearch).to have_received(:choose_book)
     end
+
   end
 end
